@@ -43,7 +43,7 @@ function Form() {
         startDate.substr(0, 4);
 
       //Store the data on the database by calling the REST API
-      fetch("https://yoga-backend-new.onrender.com/user/", {
+      fetch("https://yoga-backend-new.onrender.com/user", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
