@@ -37,7 +37,7 @@ function Payment() {
           err += "Invalid CVV number\n";
         }
         if (err.length == 0) {
-            fetch('https://yoga-backend-x71i.onrender.com/payment',{
+            fetch('https://yoga-backend-new.onrender.com/payment',{
               "method":"post",
               headers:{
                 "Content-Type":"application/json"

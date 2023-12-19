@@ -43,7 +43,7 @@ function Form() {
         startDate.substr(0, 4);
 
       //Store the data on the database by calling the REST API
-      fetch("https://yoga-backend-x71i.onrender.com/user/", {
+      fetch("https://yoga-backend-new.onrender.com/user/", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -185,7 +185,7 @@ function Form() {
         </div>
       </div>
       <button className="toPayment" onClick={SaveData}>
-        Continue <i class="fas fa-arrow-right"></i>
+        Enroll <i class="fas fa-arrow-right"></i>
       </button>
     </div>
   );
