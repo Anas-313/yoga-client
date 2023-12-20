@@ -4,8 +4,9 @@ import {
   validateEmail,
   validateName,
 } from "../function/functions";
-
 import "../styles/Form.css";
+
+
 function Form() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -16,7 +17,10 @@ function Form() {
   useEffect(() => {
     localStorage.clear();
   }, []);
+
   const SaveData = () => {
+    console.log("SaveData function is called");
+
     //Changing startdate format to mm/dd/year
     var err = "";
 
@@ -31,7 +35,7 @@ function Form() {
     if (!validateAge(age)) {
       err += "Age must lie between 18 and 65\n";
     }
-    if (err.length == 0) {
+    if (err.length === 0) {
       var newStartDate = "";
       newStartDate +=
         startDate[5] +
@@ -42,8 +46,11 @@ function Form() {
         "/" +
         startDate.substr(0, 4);
 
+        console.log("Before fetch call");
+
       //Store the data on the database by calling the REST API
-      fetch("https://yoga-backend-new.onrender.com/user", {
+      // fetch("https://yoga-backend-new.onrender.com/user", {
+        fetch("https://yoga-backend-x71i.onrender.com/user",{
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -58,19 +65,38 @@ function Form() {
           batchNumber: batchNumber,
         }),
       })
-        .then((response) => response.json())
+        // .then((response) => response.json())
+        .then((response) => {
+
+          console.log("Response status:", response.status);
+
+          if (response.status === 204) {
+            // Handle the case when the request is successful but there's no data in the response
+            console.log("User successfully enrolled, but no additional data returned");
+            // Perform actions to move to the payment page or display a success message
+          } else {
+            // If the server responds with a different status code, assume there's data and parse it as JSON
+            return response.json();
+          }
+        })
+        
         //Response from the REST API
         .then((responseData) => {
+          console.log("Response Data:", responseData);
           const message_id = responseData.message_id;
+          console.log("Message ID:", message_id);
+          
+
 
           //If successful updation is there or successfull insertion is there
-          if (message_id == "1" || message_id == "3"||message_id == "2") {
+          if (message_id === "1" || message_id === "3" || message_id === "2") {
             //Store the information locally to be used later
             localStorage.setItem("name", name);
             localStorage.setItem("age", Number(age));
             localStorage.setItem("email", email);
             localStorage.setItem("startDate", newStartDate);
             localStorage.setItem("batchNumber", batchNumber);
+
             //Move to the payment dialogue box
             document.querySelector(".formContainer").style.display = "none";
             document.querySelector(".paymentContainer").style.display = "flex";
@@ -80,10 +106,11 @@ function Form() {
             const message = responseData.message;
             window.alert(message);
             //If plan is active then simply reload the application
-            if (message_id == "2") {
+            if (message_id === "2") {
               window.location.reload();
             }
           }
+          console.log("After fetch call");
         })
         .catch((err) => {
           console.log(`Error in accessing the server is ${err}`);
@@ -103,13 +130,13 @@ function Form() {
 
   return (
     <div className="formContainer" >
-      
+
       <input
         type="text"
         placeholder="Name"
         value={name}
         onChange={(e) => handleNameChange(e.target.value)}
-        autocomplete="off"
+        autoComplete="off"
       />
       <input
         type="string"
@@ -148,7 +175,7 @@ function Form() {
               value="1"
               onChange={(e) => setBatchNumber(e.target.value)}
             />
-            <label for="first">6 AM-7 AM</label>
+            <label htmlFor="first">6 AM-7 AM</label>
             <br />
           </div>
           <div>
@@ -159,7 +186,7 @@ function Form() {
               value="2"
               onChange={(e) => setBatchNumber(e.target.value)}
             />
-            <label for="second">7 AM-8 AM</label>
+            <label htmlFor="second">7 AM-8 AM</label>
             <br />
           </div>
           <div>
@@ -170,7 +197,7 @@ function Form() {
               value="3"
               onChange={(e) => setBatchNumber(e.target.value)}
             />
-            <label for="third">8 AM-9 AM</label>
+            <label htmlFor="third">8 AM-9 AM</label>
           </div>
           <div>
             <input
@@ -180,12 +207,12 @@ function Form() {
               value="4"
               onChange={(e) => setBatchNumber(e.target.value)}
             />
-            <label for="fourth">5 PM-6 PM</label>
+            <label htmlFor="fourth">5 PM-6 PM</label>
           </div>
         </div>
       </div>
       <button className="toPayment" onClick={SaveData}>
-        Enroll <i class="fas fa-arrow-right"></i>
+        Enroll Now <i class="fas fa-arrow-right"></i>
       </button>
     </div>
   );

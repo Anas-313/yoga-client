@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import Loader from "react-loader-spinner";
 import { validateCardLength, validateCvvLength, validateUpi } from '../function/functions';
 import '../styles/Payment.css'
+
 function Payment() {
     const [mode,setMode]=useState("")
     const [upiId,setUpiId]=useState("")
@@ -25,19 +26,20 @@ function Payment() {
         var err = "";
         
         
-        if (mode =='card' && !validateCardLength(accountNo)) {
+        if (mode ==='card' && !validateCardLength(accountNo)) {
           err += "Account number is invalid\n";
         }
     
-        if (mode =='upi' && !validateUpi(upiId)) {
+        if (mode ==='upi' && !validateUpi(upiId)) {
           err += "Missing UPI Id\n";
         }
     
-        if (mode =='card' && !validateCvvLength(IFSCCode)) {
+        if (mode ==='card' && !validateCvvLength(IFSCCode)) {
           err += "Invalid CVV number\n";
         }
-        if (err.length == 0) {
-            fetch('https://yoga-backend-new.onrender.com/payment',{
+        if (err.length === 0) {
+            // fetch('https://yoga-backend-new.onrender.com/payment',{
+              fetch("https://yoga-backend-x71i.onrender.com/payment",{
               "method":"post",
               headers:{
                 "Content-Type":"application/json"
@@ -54,11 +56,12 @@ function Payment() {
                 "email":localStorage.getItem("email")
             })
           }).then((response)=>response.json())
+
           //Response from the REST API
           .then((responseData)=>{
                const message_id=responseData.message_id
                //If data is updated or stored successfully
-               if(message_id==1||message_id==3){
+               if(message_id===1||message_id===3){
                 document.querySelector(".paymentContainer").style.display="none"
                 document.querySelector(".completionContainer").style.display="flex"
                }
@@ -87,7 +90,7 @@ function Payment() {
                     value={mode}
                     onChange={((e)=>setMode('card'))}
                     />
-                    <label for="card">Debit/ATM Card</label>
+                    <label htmlFor="card">Debit/ATM Card</label>
                     </div>
                     <div className="cardDetailsDiv">
                     <input type="text" id="cardName" name="cardName"
@@ -118,7 +121,7 @@ function Payment() {
                     value={mode}
                     onChange={((e)=>setMode('upi'))}
                     />
-                    <label for="UPI">UPI</label>
+                    <label htmlFor="UPI">UPI</label>
                     </div>
                     <input type="text" id="UPI_ID" name="upi_id" 
                     value={upiId} 

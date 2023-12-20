@@ -1,4 +1,4 @@
-import React,{useState,useEffect}from 'react'
+import React from 'react'
 import '../styles/Completion.css'
 import paymentComplete from './../paymentComplete.png'
 function Completion() {
@@ -9,18 +9,18 @@ function Completion() {
     }
     return (
         <div className="completionContainer">
-            <img src={paymentComplete}/>
+            <img src={paymentComplete }alt="Payment Completed"/>
             {/* <a target="_blank" href="https://icons8.com/icon/HnXRT7E5UtPf/verified-badge">Verified Badge</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> */}
-            <h>Payment Complete</h>
+            <h3>Payment Complete</h3>
             con
             <div className="details">
-              <h>Name :{String(localStorage.getItem("name"))} </h>
-              <h>Age : {String(localStorage.getItem("age"))} years </h>
-              <h>Start Date : {String(localStorage.getItem("startDate"))} </h>
-              <h>Batch : {String(localStorage.getItem("batchNumber"))} </h>
-              <h>Fees Paid : 500 Rs. </h>
-              
+              <h3>Name :{String(localStorage.getItem("name"))} </h3>
+              <h3>Age : {String(localStorage.getItem("age"))} years </h3>
+              <h3>Start Date : {String(localStorage.getItem("startDate"))} </h3>
+              <h3>Batch : {String(localStorage.getItem("batchNumber"))} </h3>
+              <h3>Fees Paid : 500 Rs. </h3>
             </div>
+
             <button type="button"
              onClick={ReturnToHome}
             >

@@ -49,11 +49,11 @@ function validateEmail(email) {
     return true;
   }
   function validateCvvLength(cvvCode) {
-    if (cvvCode.length != 3) return false;
+    if (cvvCode.length !== 3) return false;
     return true;
   }
   function validateUpi(upiId) {
-    if (!upiId || upiId == "") {
+    if (!upiId || upiId === "") {
       return false;
     }
     return true;
